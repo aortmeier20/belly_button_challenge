@@ -74,7 +74,19 @@ function buildCharts(sample) {
 
     // Build a Bar Chart
     // Don't forget to slice and reverse the input data appropriately
-
+    const barLayout = {
+      title: {
+        text: "Top 10 Bacteria Cultures Found",
+      x: 0.05 
+      },
+      margin: {t: 30, l: 60},
+      xaxis: {title: "Nu,mber of Bacteria",
+        automargin: true,
+        tickfont: {family: 'Calibri'}
+      },
+      yaxis: {autosize: true,
+    font: {family: "Calibri"}}
+    }
 
     // Render the Bar Chart
 
