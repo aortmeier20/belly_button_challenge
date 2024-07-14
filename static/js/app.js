@@ -28,11 +28,11 @@ function buildCharts(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // Get the samples field
-    var samples = data.samples;
+    const samples = data.samples;
 
     // Filter the samples for the object with the desired sample number
-    var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
-    var result = resultArray[0];
+    const resultArray = samples.filter(sampleObj => sampleObj.id == sample);
+    const result = resultArray[0];
     
     // Get the otu_ids, otu_labels, and sample_values
     const otu_ids = result.otu_ids;
@@ -53,7 +53,7 @@ function buildCharts(sample) {
     }];
     const bubbleLayout = {
       title: {
-        text: "Bacteria Culters Per Sample",
+        text: "Bacteria Cultures Per Sample",
       x: 0.05 
       },
       margin: {t: 30, l: 60},
@@ -68,10 +68,6 @@ function buildCharts(sample) {
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
-
-
-    // Build a Bar Chart
-    // Don't forget to slice and reverse the input data appropriately
     const yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
     const barData = [{
       y: yticks,
@@ -80,7 +76,10 @@ function buildCharts(sample) {
       type: "bar",
       orientation: "h"
     }];
-    
+
+    // Build a Bar Chart
+    // Don't forget to slice and reverse the input data appropriately
+  
     const barLayout = {
       title: {
         text: "Top 10 Bacteria Cultures Found",
@@ -102,6 +101,7 @@ function buildCharts(sample) {
 
 // Function to run on page load
 function init() {
+  const selector = d3.select('#selDataset')
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // Get the names field
@@ -111,7 +111,6 @@ function init() {
     })
 
     // Use d3 to select the dropdown with id of `#selDataset`
-    const selector = d3.select('#selDataset')
     sampleNames.forEach((sample) => {
       selector
         .append("option")
@@ -120,13 +119,9 @@ function init() {
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
-      function optionChanged(newSample) {
-        buildCharts(newSample);
-        buildMetadata(newSample);
-    }
 
     // Get the first sample from the list
-      const firstSample = sampleNames[0];
+    const firstSample = sampleNames[0];
 
 
     // Build charts and metadata panel with the first sample
@@ -135,13 +130,11 @@ function init() {
   });
 }
 
-// Function for event listener
+  // Function for event listener
 function optionChanged(newSample) {
   // Build charts and metadata panel each time a new sample is selected
-  function optionChanged(newSample) {
-    buildCharts(newSample);
-    buildMetadata(newSample);
-  }
+  buildCharts(newSample);
+  buildMetadata(newSample);
 }
 
 // Initialize the dashboard
