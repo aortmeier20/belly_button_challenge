@@ -53,6 +53,18 @@ function buildCharts(sample) {
         colorscale: 'Earth'
       }
     }];
+    const bubbleLayout = {
+      title: {
+        text: "Bacteria Culters Per Sample",
+      x: 0.05 
+      },
+      margin: {t: 30, l: 60},
+      hovermode: "closest",
+      xaxis: {title: "OTU ID"},
+      yaxis: {title: "Number of Bacteria"}
+      autosize: true,
+    font: {family: "Calibri"}
+    }
 
     // Render the Bubble Chart
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
