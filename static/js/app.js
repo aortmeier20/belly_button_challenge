@@ -98,7 +98,7 @@ function buildCharts(sample) {
     }
 
     // Render the Bar Chart
-    Plotly.newPlot("bar", barData, bubbleLayout);
+    Plotly.newPlot("bar", barData, barLayout);
   });
 }
 
@@ -107,28 +107,43 @@ function init() {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // Get the names field
+    const sampleNames = data.names;
 
+      
+    })
 
     // Use d3 to select the dropdown with id of `#selDataset`
-
-
+    const selector = d3.select('#selDataset')
+    sampleNames.forEach((sample) => {
+      selector
+        .append("option")
+        .text(sample)
+        .property("value", sample);
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
-
+      function optionChanged(newSample) {
+        buildCharts(newSample);
+        buildMetadata(newSample);
+    }
 
     // Get the first sample from the list
+      const firstSample = sampleNames[0];
 
 
     // Build charts and metadata panel with the first sample
-
+      buildCharts(firstSample);
+      buildMetadata(firstSample);
   });
 }
 
 // Function for event listener
 function optionChanged(newSample) {
   // Build charts and metadata panel each time a new sample is selected
-
+  function optionChanged(newSample) {
+    buildCharts(newSample);
+    buildMetadata(newSample);
+  }
 }
 
 // Initialize the dashboard
