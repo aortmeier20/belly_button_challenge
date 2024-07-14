@@ -33,17 +33,29 @@ function buildCharts(sample) {
     var samples = data.samples;
 
     // Filter the samples for the object with the desired sample number
-    var resultArray = samples.filter(sampleObj => sample Object.id == sample);
+    var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
     var result = resultArray[0];
     
     // Get the otu_ids, otu_labels, and sample_values
-
+    const otu_ids = result.otu_ids;
+    const otu_labels = result.otu_labels;
+    const sample_values = result.sample_values;
 
     // Build a Bubble Chart
-
+    const bubbleData = [{
+      x: otu_ids,
+      y: sample_values
+      text: otu_labels
+      mode: 'markers'
+      marker: {
+        size: sample_values
+        color: otu_ids
+        colorscale: 'Earth'
+      }
+    }];
 
     // Render the Bubble Chart
-
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
 
