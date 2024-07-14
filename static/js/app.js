@@ -17,11 +17,9 @@ function buildMetadata(sample) {
 
     // Inside a loop, you will need to use d3 to append new
     // tags for each key-value in the filtered metadata.
-    Object.entries(result).forEach(([key, value])) => {
+    Object.entries(result).forEach(([key, value]) => {
       PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
-    };
-
-
+    });
   });
 }
 
@@ -44,12 +42,12 @@ function buildCharts(sample) {
     // Build a Bubble Chart
     const bubbleData = [{
       x: otu_ids,
-      y: sample_values
-      text: otu_labels
-      mode: 'markers'
+      y: sample_values,
+      text: otu_labels,
+      mode: 'markers',
       marker: {
-        size: sample_values
-        color: otu_ids
+        size: sample_values,
+        color: otu_ids,
         colorscale: 'Earth'
       }
     }];
@@ -61,7 +59,7 @@ function buildCharts(sample) {
       margin: {t: 30, l: 60},
       hovermode: "closest",
       xaxis: {title: "OTU ID"},
-      yaxis: {title: "Number of Bacteria"}
+      yaxis: {title: "Number of Bacteria"},
       autosize: true,
     font: {family: "Calibri"}
     }
