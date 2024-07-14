@@ -74,6 +74,15 @@ function buildCharts(sample) {
 
     // Build a Bar Chart
     // Don't forget to slice and reverse the input data appropriately
+    const yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
+    const barData = [{
+      y: yticks,
+      x: sample_values.slice(0, 10).reverse(),
+      text: otu_labels.slice(0, 10).reverse(),
+      type: "bar",
+      orientation: "h"
+    }];
+    
     const barLayout = {
       title: {
         text: "Top 10 Bacteria Cultures Found",
@@ -89,7 +98,7 @@ function buildCharts(sample) {
     }
 
     // Render the Bar Chart
-
+    Plotly.newPlot("bar", barData, bubbleLayout);
   });
 }
 
