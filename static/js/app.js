@@ -51,7 +51,7 @@ function buildCharts(sample) {
         colorscale: 'Earth'
       }
     }];
-    const bubbleLayout = {
+  const bubbleLayout = {
       title: {
         text: "Bacteria Cultures Per Sample",
       x: 0.05 
@@ -86,7 +86,7 @@ function buildCharts(sample) {
       x: 0.05 
       },
       margin: {t: 30, l: 60},
-      xaxis: {title: "Nu,mber of Bacteria",
+      xaxis: {title: "Number of Bacteria",
         automargin: true,
         tickfont: {family: 'Calibri'}
       },
@@ -105,37 +105,33 @@ function init() {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // Get the names field
-    const sampleNames = data.names;
-
-      
-    })
-
     // Use d3 to select the dropdown with id of `#selDataset`
+    // Get the first sample from the list
+    // Build charts and metadata panel with the first sample
+    const sampleNames = data.names;
     sampleNames.forEach((sample) => {
-      selector
-        .append("option")
-        .text(sample)
-        .property("value", sample);
+          selector
+                .append("option")
+                .text(sample)
+                .property("value", sample);
+        });
+      
+        const firstSample = sampleNames[0];
+        buildCharts(firstSample);
+        buildMetadata(firstSample);
+    });
+}
+
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
 
-    // Get the first sample from the list
-    const firstSample = sampleNames[0];
-
-
-    // Build charts and metadata panel with the first sample
-      buildCharts(firstSample);
-      buildMetadata(firstSample);
-  });
-}
-
+  // Build charts and metadata panel with the first sample
   // Function for event listener
-function optionChanged(newSample) {
   // Build charts and metadata panel each time a new sample is selected
+function optionChanged(newSample) {
   buildCharts(newSample);
   buildMetadata(newSample);
 }
-
 // Initialize the dashboard
 init();
