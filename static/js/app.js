@@ -2,21 +2,21 @@
 function buildMetadata(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
-    // get the metadata field
+  // get the metadata field
     const metadata = data.metadata;
 
-    // Filter the metadata for the object with the desired sample number
+  // Filter the metadata for the object with the desired sample number
     const resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
     const result = resultArray[0];
 
-    // Use d3 to select the panel with id of `#sample-metadata`
+  // Use d3 to select the panel with id of `#sample-metadata`
     const PANEL = d3.select("#sample-metadata");
 
-    // Use `.html("") to clear any existing metadata
+  // Use `.html("") to clear any existing metadata
     PANEL.html("");
 
-    // Inside a loop, you will need to use d3 to append new
-    // tags for each key-value in the filtered metadata.
+  // Inside a loop, you will need to use d3 to append new
+  // tags for each key-value in the filtered metadata.
     Object.entries(result).forEach(([key, value]) => {
       PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
     });
@@ -27,19 +27,19 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
-    // Get the samples field
+  // Get the samples field
     const samples = data.samples;
 
-    // Filter the samples for the object with the desired sample number
+  // Filter the samples for the object with the desired sample number
     const resultArray = samples.filter(sampleObj => sampleObj.id == sample);
     const result = resultArray[0];
     
-    // Get the otu_ids, otu_labels, and sample_values
+  // Get the otu_ids, otu_labels, and sample_values
     const otu_ids = result.otu_ids;
     const otu_labels = result.otu_labels;
     const sample_values = result.sample_values;
 
-    // Build a Bubble Chart
+  // Build a Bubble Chart
     const bubbleData = [{
       x: otu_ids,
       y: sample_values,
@@ -64,10 +64,10 @@ function buildCharts(sample) {
     font: {family: "Calibri"}
     }
 
-    // Render the Bubble Chart
+  // Render the Bubble Chart
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
-    // For the Bar Chart, map the otu_ids to a list of strings for your yticks
+  // For the Bar Chart, map the otu_ids to a list of strings for your yticks
     const yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
     const barData = [{
       y: yticks,
@@ -77,8 +77,8 @@ function buildCharts(sample) {
       orientation: "h"
     }];
 
-    // Build a Bar Chart
-    // Don't forget to slice and reverse the input data appropriately
+  // Build a Bar Chart
+  // Don't forget to slice and reverse the input data appropriately
   
     const barLayout = {
       title: {
@@ -94,20 +94,23 @@ function buildCharts(sample) {
     font: {family: "Calibri"}}
     }
 
-    // Render the Bar Chart
+  // Render the Bar Chart
     Plotly.newPlot("bar", barData, barLayout);
   });
 }
 
-// Function to run on page load
+  // Function to run on page load
+  // Use d3 to select the dropdown with id of `#selDataset`
 function init() {
   const selector = d3.select('#selDataset')
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
-    // Get the names field
-    // Use d3 to select the dropdown with id of `#selDataset`
-    // Get the first sample from the list
-    // Build charts and metadata panel with the first sample
+  // Get the names field
+  // Get the first sample from the list
+  // Build charts and metadata panel with the first sample
+  // Use the list of sample names to populate the select options
+  // Hint: Inside a loop, you will need to use d3 to append a new
+  // option for each sample name.
     const sampleNames = data.names;
     sampleNames.forEach((sample) => {
           selector
@@ -121,11 +124,6 @@ function init() {
         buildMetadata(firstSample);
     });
 }
-
-    // Use the list of sample names to populate the select options
-    // Hint: Inside a loop, you will need to use d3 to append a new
-    // option for each sample name.
-
   // Build charts and metadata panel with the first sample
   // Function for event listener
   // Build charts and metadata panel each time a new sample is selected
@@ -133,5 +131,5 @@ function optionChanged(newSample) {
   buildCharts(newSample);
   buildMetadata(newSample);
 }
-// Initialize the dashboard
+  // Initialize the dashboard
 init();
